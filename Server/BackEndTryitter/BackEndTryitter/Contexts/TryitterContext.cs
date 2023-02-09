@@ -17,7 +17,7 @@ public class TryitterContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            var connectionString = Environment.GetEnvironmentVariable("ASPNETCORE_CONNECTION_STRING");
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
