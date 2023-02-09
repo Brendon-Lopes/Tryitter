@@ -15,7 +15,10 @@ public class TryitterContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-        optionsBuilder.UseSqlServer(connectionString);
+        if (!optionsBuilder.IsConfigured)
+        {
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            optionsBuilder.UseSqlServer(connectionString);
+        }
     }
 }
