@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using BackEndTryitter.Enums;
 
 namespace BackEndTryitter.Models
@@ -11,6 +12,7 @@ namespace BackEndTryitter.Models
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        [Column(TypeName = "int")]
         public ETrybeModules CurrentModule { get; set; }
         public string? StatusMessage { get; set; }
         public DateTime CreatedAt { get; set; }
