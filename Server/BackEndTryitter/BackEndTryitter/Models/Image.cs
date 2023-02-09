@@ -8,7 +8,6 @@ namespace BackEndTryitter.Models
         [Key]
         public Guid ImageId { get; set; }
         public string ImageUrl { get; set; }
-        
         [ForeignKey("PostId")]
         public Post Post { get; set; }
         public Guid PostId { get; set; }

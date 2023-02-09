@@ -8,7 +8,6 @@ namespace BackEndTryitter.Models
     {
         [Key]
         public Guid PostId { get; set; }
-        
         [MaxLength(300)]
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -16,5 +15,7 @@ namespace BackEndTryitter.Models
         [ForeignKey("UserId")]
         public User User { get; set; }
         public Guid UserId { get; set; }
+        [InverseProperty("Post")]
+        public ICollection<Image> Images { get; set; }
     }
 }

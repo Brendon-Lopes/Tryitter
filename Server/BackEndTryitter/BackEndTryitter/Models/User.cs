@@ -17,5 +17,7 @@ namespace BackEndTryitter.Models
         public string? StatusMessage { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        [InverseProperty("User")]
+        public ICollection<Post> Posts { get; set; }
     }
 }
