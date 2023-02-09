@@ -8,6 +8,8 @@ namespace BackEndTryitter.Models
     {
         [Key]
         public Guid PostId { get; set; }
+        
+        [MaxLength(300)]
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
