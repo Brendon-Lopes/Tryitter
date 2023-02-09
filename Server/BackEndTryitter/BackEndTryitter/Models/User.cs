@@ -1,7 +1,10 @@
-﻿namespace BackEndTryitter.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BackEndTryitter.Models
 {
     public class User
     {
+        [Key]
         public Guid UserId { get; set; }
         public string FullName { get; set; }
         public string Username { get; set; }
