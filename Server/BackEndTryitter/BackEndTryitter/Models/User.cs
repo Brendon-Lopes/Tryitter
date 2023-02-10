@@ -12,12 +12,12 @@ namespace BackEndTryitter.Models
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        [Column(TypeName = "int")]
-        public ETrybeModules CurrentModule { get; set; }
+        [Range(1, 4)]
+        public int CurrentModule { get; set; }
         public string? StatusMessage { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         [InverseProperty("User")]
-        public ICollection<Post> Posts { get; set; }
+        public ICollection<Post>? Posts { get; set; }
     }
 }
