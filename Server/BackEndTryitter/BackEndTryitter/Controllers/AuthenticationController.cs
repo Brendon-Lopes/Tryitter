@@ -27,11 +27,11 @@ public class AuthenticationController : ControllerBase
             request.CurrentModule);
 
         var response = new AuthenticationResponse(
-            authResult.Id,
-            authResult.FullName,
-            authResult.UserName,
-            authResult.Email,
-            authResult.CurrentModule,
+            authResult.User.UserId,
+            authResult.User.FullName,
+            authResult.User.Username,
+            authResult.User.Email,
+            authResult.User.CurrentModule,
             authResult.Token);
 
         return Ok(response);
@@ -45,11 +45,11 @@ public class AuthenticationController : ControllerBase
             request.Password);
 
         var response = new AuthenticationResponse(
-            authResult.Id,
-            authResult.FullName,
-            authResult.UserName,
-            authResult.Email,
-            authResult.CurrentModule,
+            authResult.User.UserId,
+            authResult.User.FullName,
+            authResult.User.Username,
+            authResult.User.Email,
+            authResult.User.CurrentModule,
             authResult.Token);
 
         return Ok(response);

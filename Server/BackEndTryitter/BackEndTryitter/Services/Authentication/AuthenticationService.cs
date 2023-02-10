@@ -37,9 +37,9 @@ public class AuthenticationService : IAuthenticationService
 
         _userRepository.Add(user);
 
-        var token = _jwtTokenGenerator.GenerateToken(user.UserId, fullName, username);
+        var token = _jwtTokenGenerator.GenerateToken(user);
 
-        return new AuthenticationResult(user.UserId, fullName, email, username, currentModule, token);
+        return new AuthenticationResult(user, token);
     }
 
     public AuthenticationResult Login(string email, string password)
@@ -54,8 +54,8 @@ public class AuthenticationService : IAuthenticationService
             throw new InvalidOperationException("Password is incorrect");
         }
 
-        var token = _jwtTokenGenerator.GenerateToken(user.UserId, user.FullName, user.Username);
+        var token = _jwtTokenGenerator.GenerateToken(user);
 
-        return new AuthenticationResult(user.UserId, user.FullName, email, user.Username, user.CurrentModule, token);
+        return new AuthenticationResult(user, token);
     }
 }
