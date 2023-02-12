@@ -1,7 +1,9 @@
+using BackEndTryitter.Contracts.Authentication;
+
 namespace BackEndTryitter.Services.Authentication;
 
 public interface IAuthenticationService
 {
-    AuthenticationResult Register(string fullName, string username, string email, string password, int currentModule);
+    AuthenticationResult Register(RegisterRequest request);
     AuthenticationResult Login(string email, string password);
 }
