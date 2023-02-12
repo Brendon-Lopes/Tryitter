@@ -1,6 +1,7 @@
 using BackEndTryitter.Models;
 using BackEndTryitter.Repositories;
 using Microsoft.EntityFrameworkCore;
+using BCrypt.Net;
 
 namespace BackEndTryitter.Services.Authentication;
 
@@ -26,13 +27,16 @@ public class AuthenticationService : IAuthenticationService
             throw new DbUpdateException("Email already exists");
         }
 
+        var salt = BCrypt.Net.BCrypt.GenerateSalt();
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
+
         var user = new User
         {
             UserId = Guid.NewGuid(),
             FullName = fullName,
             Username = username,
             Email = email,
-            Password = password,
+            Password = hashedPassword,
             CurrentModule = currentModule
         };
 
@@ -50,7 +54,9 @@ public class AuthenticationService : IAuthenticationService
             throw new DbUpdateException("User with given email does not exist");
         }
 
-        if (user.Password != password)
+        var isPasswordCorrect = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+        if (!isPasswordCorrect)
         {
             throw new DbUpdateException("Password is incorrect");
         }
