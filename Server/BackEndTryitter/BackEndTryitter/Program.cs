@@ -1,4 +1,5 @@
 using BackEndTryitter.Contexts;
+using BackEndTryitter.Middleware;
 using BackEndTryitter.Repositories;
 using BackEndTryitter.Services.Authentication;
 
@@ -26,6 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
