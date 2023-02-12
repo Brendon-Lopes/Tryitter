@@ -1,5 +1,9 @@
+using System.Net;
+using BackEndTryitter.Contracts.Authentication;
+using BackEndTryitter.Exceptions;
 using BackEndTryitter.Models;
 using BackEndTryitter.Repositories;
+using BackEndTryitter.Services.Validators;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
 
@@ -16,28 +20,24 @@ public class AuthenticationService : IAuthenticationService
         _userRepository = userRepository;
     }
 
-    public AuthenticationResult Register(string fullName,
-        string username,
-        string email,
-        string password,
-        int currentModule)
+    public AuthenticationResult Register(RegisterRequest request)
     {
-        if (_userRepository.GetUserByEmail(email) is not null)
+        if (_userRepository.GetUserByEmail(request.Email) is not null)
         {
-            throw new DbUpdateException("Email already exists");
+            throw new CustomException(HttpStatusCode.Conflict, "Email already exists");
         }
 
         var salt = BCrypt.Net.BCrypt.GenerateSalt();
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password, salt);
 
         var user = new User
         {
             UserId = Guid.NewGuid(),
-            FullName = fullName,
-            Username = username,
-            Email = email,
+            FullName = request.FullName,
+            Username = request.Username,
+            Email = request.Email,
             Password = hashedPassword,
-            CurrentModule = currentModule
+            CurrentModule = request.CurrentModule
         };
 
         _userRepository.Add(user);
@@ -51,14 +51,14 @@ public class AuthenticationService : IAuthenticationService
     {
         if (_userRepository.GetUserByEmail(email) is not { } user)
         {
-            throw new DbUpdateException("User with given email does not exist");
+            throw new CustomException(HttpStatusCode.BadRequest, "User with given email does not exist");
         }
 
         var isPasswordCorrect = BCrypt.Net.BCrypt.Verify(password, user.Password);
 
         if (!isPasswordCorrect)
         {
-            throw new DbUpdateException("Password is incorrect");
+            throw new CustomException(HttpStatusCode.BadRequest, "Password is incorrect");
         }
 
         var token = _jwtTokenGenerator.GenerateToken(user);
