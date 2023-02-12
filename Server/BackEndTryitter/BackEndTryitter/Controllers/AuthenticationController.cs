@@ -1,6 +1,7 @@
 using BackEndTryitter.Contracts.Authentication;
 using BackEndTryitter.Models;
 using BackEndTryitter.Services.Authentication;
+using BackEndTryitter.Services.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndTryitter.Controllers;
@@ -19,12 +20,18 @@ public class AuthenticationController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register(RegisterRequest request)
     {
-        var authResult = _authenticationService.Register(
-            request.FullName,
-            request.Username,
-            request.Email,
-            request.Password,
-            request.CurrentModule);
+        var validator = new RegisterUserValidator();
+        var validationResult = validator.Validate(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(new { error = new {
+                message = "Validation errors",
+                errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
+            }});
+        }
+
+        var authResult = _authenticationService.Register(request);
 
         var response = new AuthenticationResponse(
             authResult.User.UserId,
