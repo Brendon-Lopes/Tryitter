@@ -1,5 +1,6 @@
 using BackEndTryitter.Models;
 using BackEndTryitter.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEndTryitter.Services.Authentication;
 
@@ -22,7 +23,7 @@ public class AuthenticationService : IAuthenticationService
     {
         if (_userRepository.GetUserByEmail(email) is not null)
         {
-            throw new InvalidOperationException("Email already exists");
+            throw new DbUpdateException("Email already exists");
         }
 
         var user = new User
@@ -46,12 +47,12 @@ public class AuthenticationService : IAuthenticationService
     {
         if (_userRepository.GetUserByEmail(email) is not { } user)
         {
-            throw new InvalidOperationException("User with given email does not exist");
+            throw new DbUpdateException("User with given email does not exist");
         }
 
         if (user.Password != password)
         {
-            throw new InvalidOperationException("Password is incorrect");
+            throw new DbUpdateException("Password is incorrect");
         }
 
         var token = _jwtTokenGenerator.GenerateToken(user);
