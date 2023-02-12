@@ -47,9 +47,18 @@ public class AuthenticationController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login(LoginRequest request)
     {
-        var authResult = _authenticationService.Login(
-            request.Email,
-            request.Password);
+        var validator = new LoginValidator();
+        var validationResult = validator.Validate(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(new { error = new {
+                message = "Validation errors",
+                errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
+            }});
+        }
+
+        var authResult = _authenticationService.Login(request);
 
         var response = new AuthenticationResponse(
             authResult.User.UserId,
