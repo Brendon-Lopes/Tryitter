@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using BackEndTryitter.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackEndTryitter.Middleware;
@@ -29,12 +30,17 @@ public class ErrorHandlingMiddleware
     {
         var code = HttpStatusCode.InternalServerError;
 
-        if (exception is DbUpdateException)
+        if (exception is CustomException e)
+        {
+            code = e.StatusCode;
+        }
+        else if (exception is DbUpdateException)
         {
             code = HttpStatusCode.BadRequest;
         }
 
-        var result = JsonSerializer.Serialize(new { error = exception.Message });
+
+        var result = JsonSerializer.Serialize(new { error = new { message = exception.Message}});
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)code;
         return context.Response.WriteAsync(result);
