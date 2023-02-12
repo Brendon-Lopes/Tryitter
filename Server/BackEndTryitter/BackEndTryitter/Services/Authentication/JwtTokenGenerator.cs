@@ -19,7 +19,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Supersafesecret123!")),
                 SecurityAlgorithms.HmacSha256Signature
             ),
-            Expires = DateTime.Now.AddDays(1),
+            Expires = DateTime.UtcNow.AddDays(1),
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
