@@ -23,9 +23,10 @@ public class AuthenticationService : IAuthenticationService
     public AuthenticationResult Register(RegisterRequest request)
     {
         if (_userRepository.GetUserByEmail(request.Email) is not null)
-        {
             throw new CustomException(HttpStatusCode.Conflict, "Email already exists");
-        }
+
+        if (_userRepository.GetUserByUsername(request.Username) is not null)
+            throw new CustomException(HttpStatusCode.Conflict, "Username already exists");
 
         var salt = BCrypt.Net.BCrypt.GenerateSalt();
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password, salt);
