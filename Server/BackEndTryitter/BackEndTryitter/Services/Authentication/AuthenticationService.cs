@@ -47,14 +47,14 @@ public class AuthenticationService : IAuthenticationService
         return new AuthenticationResult(user, token);
     }
 
-    public AuthenticationResult Login(string email, string password)
+    public AuthenticationResult Login(LoginRequest request)
     {
-        if (_userRepository.GetUserByEmail(email) is not { } user)
+        if (_userRepository.GetUserByEmail(request.Email) is not { } user)
         {
             throw new CustomException(HttpStatusCode.BadRequest, "User with given email does not exist");
         }
 
-        var isPasswordCorrect = BCrypt.Net.BCrypt.Verify(password, user.Password);
+        var isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
 
         if (!isPasswordCorrect)
         {
