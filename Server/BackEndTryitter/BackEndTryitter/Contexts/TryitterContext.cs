@@ -21,4 +21,19 @@ public class TryitterContext : DbContext, ITryitterContext
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>().Property(u => u.CreatedAt)
+            .HasDefaultValueSql("getdate()")
+            .HasConversion<DateTime>()
+            .HasColumnType("datetime2")
+            .IsRequired();
+
+        modelBuilder.Entity<User>().Property(u => u.UpdatedAt)
+            .HasDefaultValueSql("getdate()")
+            .HasConversion<DateTime>()
+            .HasColumnType("datetime2")
+            .IsRequired();
+    }
 }
