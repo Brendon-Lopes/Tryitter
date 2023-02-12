@@ -18,6 +18,11 @@ public class UserRepository : IUserRepository
         return _context.Users.FirstOrDefault(u => u.Email == email);
     }
 
+    public User? GetUserByUsername(string username)
+    {
+        return _context.Users.FirstOrDefault(u => u.Username == username);
+    }
+
     public void Add(User user)
     {
         _context.Users.Add(user);
