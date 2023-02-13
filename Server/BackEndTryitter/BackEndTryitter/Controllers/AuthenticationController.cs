@@ -1,5 +1,4 @@
 using BackEndTryitter.Contracts.Authentication;
-using BackEndTryitter.Models;
 using BackEndTryitter.Services.Authentication;
 using BackEndTryitter.Services.Validators;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +38,7 @@ public class AuthenticationController : ControllerBase
             authResult.User.Username,
             authResult.User.Email,
             authResult.User.CurrentModule,
+            authResult.User.StatusMessage ?? "",
             authResult.Token);
 
         return Ok(response);
@@ -66,6 +66,7 @@ public class AuthenticationController : ControllerBase
             authResult.User.Username,
             authResult.User.Email,
             authResult.User.CurrentModule,
+            authResult.User.StatusMessage ?? "",
             authResult.Token);
 
         return Ok(response);
