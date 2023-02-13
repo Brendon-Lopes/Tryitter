@@ -19,6 +19,25 @@ public class UserController : ControllerBase
         _userRepository = userRepository;
     }
 
+    [HttpGet]
+    [Route("{id}")]
+    [AllowAnonymous]
+    public IActionResult GetUserById([FromRoute] Guid id)
+    {
+        var user =_userRepository.GetUserById(id);
+
+        if (user == null) return NotFound();
+
+        var response = new GetUserByIdResponse(
+            user.UserId,
+            user.FullName,
+            user.Username,
+            user.CurrentModule,
+            user.StatusMessage ?? "");
+
+        return Ok(response);
+    }
+
     [HttpPatch]
     [Route("{id}/status")]
     public IActionResult UpdateUserStatus([FromRoute] Guid id, [FromBody] UpdateUserStatusRequest request)
