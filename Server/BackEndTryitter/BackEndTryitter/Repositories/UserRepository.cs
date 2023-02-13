@@ -49,4 +49,16 @@ public class UserRepository : IUserRepository
 
         _context.SaveChanges();
     }
+
+    public void Delete(Guid id)
+    {
+        var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+
+        if (user == null)
+            throw new CustomException(HttpStatusCode.NotFound, "User not found");
+
+        _context.Users.Remove(user);
+
+        _context.SaveChanges();
+    }
 }

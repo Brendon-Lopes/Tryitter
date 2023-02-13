@@ -10,4 +10,5 @@ public interface IUserRepository
     User? GetUserById(Guid id);
     void Add(User user);
     void UpdateStatus(Guid id, UpdateUserStatusRequest request);
+    void Delete(Guid id);
 }
