@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackEndTryitter.Contexts;
 
-public class TryitterContext : DbContext, ITryitterContext
+public class TryitterContext : DbContext
 {
     public TryitterContext(DbContextOptions<TryitterContext> options)
         : base(options)
