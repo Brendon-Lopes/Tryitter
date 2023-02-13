@@ -24,7 +24,7 @@ public class UserController : ControllerBase
     [AllowAnonymous]
     public IActionResult GetUserById([FromRoute] Guid id)
     {
-        var user =_userRepository.GetUserById(id);
+        var user = _userRepository.GetUserById(id);
 
         if (user == null) return NotFound();
 
@@ -34,6 +34,22 @@ public class UserController : ControllerBase
             user.Username,
             user.CurrentModule,
             user.StatusMessage ?? "");
+
+        return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("username/{username}")]
+    public IActionResult FindUsersByUsername([FromRoute] string username)
+    {
+        var users = _userRepository.FindUsersByUsername(username);
+
+        var response = users.Select(user => new GetUserByIdResponse(
+            user.UserId,
+            user.FullName,
+            user.Username,
+            user.CurrentModule,
+            user.StatusMessage ?? ""));
 
         return Ok(response);
     }
