@@ -6,4 +6,5 @@ public record AuthenticationResponse(
     string Username,
     string Email,
     int CurrentModule,
+    string StatusMessage,
     string Token);
