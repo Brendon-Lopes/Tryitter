@@ -52,14 +52,14 @@ public class AuthenticationService : IAuthenticationService
     {
         if (_userRepository.GetUserByEmail(request.Email) is not { } user)
         {
-            throw new CustomException(HttpStatusCode.BadRequest, "User with given email does not exist");
+            throw new CustomException(HttpStatusCode.BadRequest, "Invalid email or password");
         }
 
         var isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
 
         if (!isPasswordCorrect)
         {
-            throw new CustomException(HttpStatusCode.BadRequest, "Password is incorrect");
+            throw new CustomException(HttpStatusCode.BadRequest, "Invalid email or password");
         }
 
         var token = _jwtTokenGenerator.GenerateToken(user);
