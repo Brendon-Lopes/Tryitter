@@ -23,11 +23,7 @@ public class UserController : ControllerBase
     [Route("{id}/status")]
     public IActionResult UpdateUserStatus([FromRoute] Guid id, [FromBody] UpdateUserStatusRequest request)
     {
-        var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
-        if (claimsIdentity == null) return Unauthorized();
-
-        var tokenId = claimsIdentity.Claims.First(c => c.Type == "userId").Value;
-        if (tokenId != id.ToString()) return Unauthorized();
+        if (!CheckAuthorization(HttpContext, id)) return Unauthorized();
 
         var validator = new UpdateUserStatusValidator();
         var validationResult = validator.Validate(request);
@@ -43,5 +39,25 @@ public class UserController : ControllerBase
         _userRepository.UpdateStatus(id, request);
 
         return NoContent();
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    public IActionResult DeleteUser([FromRoute] Guid id)
+    {
+        if (!CheckAuthorization(HttpContext, id)) return Unauthorized();
+
+        _userRepository.Delete(id);
+
+        return NoContent();
+    }
+
+    private static bool CheckAuthorization(HttpContext httpContext, Guid id)
+    {
+        var claimsIdentity = httpContext.User.Identity as ClaimsIdentity;
+        if (claimsIdentity == null) return false;
+
+        var tokenId = claimsIdentity.Claims.First(c => c.Type == "userId").Value;
+        return tokenId == id.ToString();
     }
 }
