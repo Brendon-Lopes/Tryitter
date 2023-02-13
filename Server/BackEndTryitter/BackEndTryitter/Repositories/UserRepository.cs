@@ -30,6 +30,14 @@ public class UserRepository : IUserRepository
         return _context.Users.FirstOrDefault(u => u.UserId == id);
     }
 
+    public ICollection<User> FindUsersByUsername(string username)
+    {
+        return _context.Users.Where(u => u
+            .Username.ToLower()
+            .Contains(username.ToLower()))
+            .ToList();
+    }
+
     public void Add(User user)
     {
         _context.Users.Add(user);
