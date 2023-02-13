@@ -3,9 +3,6 @@ using BackEndTryitter.Contracts.Authentication;
 using BackEndTryitter.Exceptions;
 using BackEndTryitter.Models;
 using BackEndTryitter.Repositories;
-using BackEndTryitter.Services.Validators;
-using Microsoft.EntityFrameworkCore;
-using BCrypt.Net;
 
 namespace BackEndTryitter.Services.Authentication;
 
