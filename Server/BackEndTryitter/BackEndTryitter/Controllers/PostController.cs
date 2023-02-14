@@ -4,6 +4,7 @@ using BackEndTryitter.Repositories;
 using BackEndTryitter.Services.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 
 namespace BackEndTryitter.Controllers
 {
@@ -78,6 +79,9 @@ namespace BackEndTryitter.Controllers
             if (!AuthorizationServices.CheckAuthorization(HttpContext, post.userId))
                 return Unauthorized();
 
+            if (post.text.Length > 300 || post.text.Length == 0)
+                return BadRequest("Text Length is invalid");
+
             Post addPost = new()
             {
                 PostId = Guid.NewGuid(),
@@ -98,6 +102,10 @@ namespace BackEndTryitter.Controllers
         {
             var postToUpdate = _postRepository.GetPostById(postId);
             
+
+            if (text.text.Length > 300 || text.text.Length == 0)
+                return BadRequest("Text Length is invalid");
+
             if (postToUpdate == null)
                 return NotFound();
             
