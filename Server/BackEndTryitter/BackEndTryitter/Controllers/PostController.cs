@@ -57,6 +57,21 @@ namespace BackEndTryitter.Controllers
             return Ok(posts);
         }
 
+        [HttpGet]
+        [Route("last/{username}")]
+        public IActionResult GetLastPostByUsername([FromRoute] string username)
+        {
+            var post = _postRepository.GetLastPostByUsername(username);
+            
+            if (post == null)
+                return NotFound();
+
+            if (!AuthorizationServices.CheckAuthorization(HttpContext, post.UserId))
+                return Unauthorized();
+
+            return Ok(post);
+        }
+
         [HttpPost]
         public IActionResult AddPost([FromBody] PostRequest post)
         {
