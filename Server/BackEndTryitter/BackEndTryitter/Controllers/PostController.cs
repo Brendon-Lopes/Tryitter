@@ -87,8 +87,8 @@ namespace BackEndTryitter.Controllers
                 PostId = Guid.NewGuid(),
                 UserId = post.userId,
                 Text = post.text,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
         
             _postRepository.AddPost(addPost);
@@ -101,7 +101,6 @@ namespace BackEndTryitter.Controllers
         public IActionResult UpdatePost([FromRoute] Guid postId, [FromBody] PostText text)
         {
             var postToUpdate = _postRepository.GetPostById(postId);
-            
 
             if (text.text.Length > 300 || text.text.Length == 0)
                 return BadRequest("Text Length is invalid");
