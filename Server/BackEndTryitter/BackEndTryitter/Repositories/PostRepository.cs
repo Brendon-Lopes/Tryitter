@@ -29,6 +29,14 @@ namespace BackEndTryitter.Repositories
         {
             return _context.Posts.ToList();
         }
+        
+        public Post? GetLastPostByUsername(string username)
+        {
+            return _context.Posts
+                .Where(p => p.User.Username == username)
+                .OrderBy(p => p.PostId)
+                .FirstOrDefault();
+        }
 
         public void AddPost(Post post)
         {
