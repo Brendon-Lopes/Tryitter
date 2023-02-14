@@ -15,6 +15,7 @@ builder.Services.AddDbContext<TryitterContext>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<TryitterContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
