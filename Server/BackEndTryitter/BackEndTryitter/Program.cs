@@ -63,6 +63,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    {
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<TryitterContext>();
+        context.Database.EnsureCreated();
+    }
 }
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
