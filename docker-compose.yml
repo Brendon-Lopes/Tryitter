@@ -3,12 +3,19 @@ version: "3.7"
 services:
   api:
     container_name: api
-    build: ./Server/BackEndTryitter/BackEndTryitter
+    build:
+        context: ./Server/BackEndTryitter/BackEndTryitter
+        dockerfile: Dockerfile
     ports:
         - "5000:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_CONNECTION_STRING=Server=db;Database=Tryitter;User=SA;Password=Password123;Trusted_Connection=False;TrustServerCertificate=True;
+      - ASPNETCORE_JWT_SECRET=Supersafesecret123!
+    depends_on:
+      db:
+        condition: service_healthy
+
   db:
     container_name: sql_server_db
     image: mcr.microsoft.com/mssql/server:2019-CU13-ubuntu-20.04
@@ -18,3 +25,8 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password123
       - MSSQL_PID=Developer
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Password123", "-Q", "SELECT 1" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
