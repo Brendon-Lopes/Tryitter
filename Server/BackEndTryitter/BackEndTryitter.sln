@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackEndTryitter", "BackEndTryitter\BackEndTryitter.csproj", "{D772BC82-9005-4ACC-9559-A95C0CC72FEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTryitter", "TestTryitter\TestTryitter.csproj", "{5503D315-40F7-4296-9FD1-0C9DD14FE9B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D772BC82-9005-4ACC-9559-A95C0CC72FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D772BC82-9005-4ACC-9559-A95C0CC72FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D772BC82-9005-4ACC-9559-A95C0CC72FEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5503D315-40F7-4296-9FD1-0C9DD14FE9B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5503D315-40F7-4296-9FD1-0C9DD14FE9B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5503D315-40F7-4296-9FD1-0C9DD14FE9B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5503D315-40F7-4296-9FD1-0C9DD14FE9B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
