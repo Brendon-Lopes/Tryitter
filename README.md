@@ -10,7 +10,7 @@ conhecimentos adquiridos durante o curso de Aceleração em C# da Trybe.
 Feito por:
 - [Brendon Lopes](http://github.com/brendon-lopes)
 - [André Morsch](http://github.com/andremorsch)
-
+ 
 ## Principais tecnologias utilizadas
 
 - .NET Core 6.0
@@ -22,6 +22,10 @@ Feito por:
 - XUnit
 - Fluent Assertions
 - Docker / Docker Compose
+
+## Diagrama do Banco de Dados
+
+![Diagrama do Banco de Dados](./diagrama-Tryitter.jpg)
 
 ## Como rodar o projeto
 1. Clone este repositório
